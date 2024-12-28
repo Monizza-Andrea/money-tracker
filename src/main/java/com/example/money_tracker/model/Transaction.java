@@ -9,7 +9,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "transactions")
 @Data
 public class Transaction {
 
