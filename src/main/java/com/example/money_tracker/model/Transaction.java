@@ -22,5 +22,7 @@ public class Transaction {
     private BigDecimal amount;
     private LocalDateTime dateTime;
     private TransactionType transactionType;
+    private String category;
+    private String paymentMethod;
 
 }
