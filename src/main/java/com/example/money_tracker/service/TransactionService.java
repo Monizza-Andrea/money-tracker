@@ -28,22 +28,22 @@ public class TransactionService {
         return this.transactionRepository.findByDateTimeBetween(start, end);
     }
 
-    public BigDecimal getTotalExpense(int year, int month) {
-        List<Transaction> transactions = getTransactionsByMonth(year, month);
-        return transactions.stream()
-                .filter(t -> t.getTransactionType() == TransactionType.EXPENSE)
-                .map(Transaction::getAmount)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
+//    public BigDecimal getTotalExpense(int year, int month) {
+//        List<Transaction> transactions = getTransactionsByMonth(year, month);
+//        return transactions.stream()
+//                .filter(t -> t.getTransactionType() == TransactionType.EXPENSE)
+//                .map(Transaction::getAmount)
+//                .reduce(BigDecimal.ZERO, BigDecimal::add);
+//    }
 
 
-    public BigDecimal getTotalIncome(int year, int month) {
-        List<Transaction> transactions = getTransactionsByMonth(year, month);
-        return transactions.stream()
-                .filter(t -> t.getTransactionType() == TransactionType.INCOME)
-                .map(Transaction::getAmount)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
+//    public BigDecimal getTotalIncome(int year, int month) {
+//        List<Transaction> transactions = getTransactionsByMonth(year, month);
+//        return transactions.stream()
+//                .filter(t -> t.getTransactionType() == TransactionType.INCOME)
+//                .map(Transaction::getAmount)
+//                .reduce(BigDecimal.ZERO, BigDecimal::add);
+//    }
 
     public Transaction findById(Long id) throws IOException {
         Optional<Transaction> transaction = this.transactionRepository.findById(id);

@@ -31,14 +31,14 @@ public class TransactionController {
         }
     }
 
-    @GetMapping("/total-income")
-    public ResponseEntity<BigDecimal> getTotalIncome(@RequestParam int year, @RequestParam int month) {
-        return ResponseEntity.ok(transactionService.getTotalIncome(year, month));
-    }
+//    @GetMapping("/total-income")
+//    public ResponseEntity<BigDecimal> getTotalIncome(@RequestParam int year, @RequestParam int month) {
+//        return ResponseEntity.ok(transactionService.getTotalIncome(year, month));
+//    }
 
-    @GetMapping("/total-expense")
-    public ResponseEntity<BigDecimal> getTotalExpense(@RequestParam int year, @RequestParam int month) {
-        return ResponseEntity.ok(transactionService.getTotalExpense(year, month));
-    }
+//    @GetMapping("/total-expense")
+//    public ResponseEntity<BigDecimal> getTotalExpense(@RequestParam int year, @RequestParam int month) {
+//        return ResponseEntity.ok(transactionService.getTotalExpense(year, month));
+//    }
 
 }
