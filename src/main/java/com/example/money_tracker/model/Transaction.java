@@ -24,11 +24,5 @@ public class Transaction {
     private String category;
     private String paymentMethod;
 
-    public TransactionType getTransactionType() {
-        return this.transactionType;
-    }
 
-    public BigDecimal getAmount() {
-        return amount;
-    }
 }
