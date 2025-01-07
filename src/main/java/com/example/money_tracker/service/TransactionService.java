@@ -30,14 +30,20 @@ public class TransactionService {
 
     public BigDecimal getTotalExpense(int year, int month) {
         List<Transaction> transactions = getTransactionsByMonth(year, month);
-        return transactions.stream()
-                .filter(t -> t.getTransactionType() == TransactionType.EXPENSE)
-                .map(Transaction::getAmount)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal result = BigDecimal.ZERO;
+        try {
+            result = transactions.stream()
+                    .filter(t -> t.getTransactionType() == TransactionType.EXPENSE)
+                    .map(Transaction::getAmount)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+        } catch (NullPointerException e) {
+            throw new NullPointerException();
+        }
+        return result;
     }
 
 
-    public BigDecimal getTotalIncome(int year, int month) throws Exception {
+    public BigDecimal getTotalIncome(int year, int month) throws NullPointerException {
         List<Transaction> transactions = getTransactionsByMonth(year, month);
         BigDecimal result = BigDecimal.ZERO;
         try {
@@ -47,10 +53,7 @@ public class TransactionService {
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
         } catch (NullPointerException e) {
             throw new NullPointerException();
-        } catch (Exception e) {
-            throw new Exception("Errore non previsto");
         }
-
         return result;
     }
 

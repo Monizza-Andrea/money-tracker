@@ -38,14 +38,16 @@ public class TransactionController {
             return ResponseEntity.ok(transactionService.getTotalIncome(year, month));
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(BigDecimal.ZERO);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(BigDecimal.ONE);
         }
     }
 
     @GetMapping("/total-expense")
     public ResponseEntity<BigDecimal> getTotalExpense(@RequestParam int year, @RequestParam int month) {
-        return ResponseEntity.ok(transactionService.getTotalExpense(year, month));
+        try {
+            return ResponseEntity.ok(transactionService.getTotalExpense(year, month));
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(BigDecimal.ZERO);
+        }
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
