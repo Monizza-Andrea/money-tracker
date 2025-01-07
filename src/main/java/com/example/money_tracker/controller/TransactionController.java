@@ -33,7 +33,7 @@ public class TransactionController {
     }
 
     @GetMapping("/total-income")
-    public ResponseEntity<BigDecimal> getTotalIncome(@RequestParam(defaultValue = "2020") int year, @RequestParam(defaultValue = "6") int month) {
+    public ResponseEntity<BigDecimal> getTotalIncome(@RequestParam int year, @RequestParam int month) {
         try {
             return ResponseEntity.ok(transactionService.getTotalIncome(year, month));
         } catch (NullPointerException e) {
