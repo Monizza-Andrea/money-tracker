@@ -28,22 +28,31 @@ public class TransactionService {
         return this.transactionRepository.findByDateTimeBetween(start, end);
     }
 
-//    public BigDecimal getTotalExpense(int year, int month) {
-//        List<Transaction> transactions = getTransactionsByMonth(year, month);
-//        return transactions.stream()
-//                .filter(t -> t.getTransactionType() == TransactionType.EXPENSE)
-//                .map(Transaction::getAmount)
-//                .reduce(BigDecimal.ZERO, BigDecimal::add);
-//    }
+    public BigDecimal getTotalExpense(int year, int month) {
+        List<Transaction> transactions = getTransactionsByMonth(year, month);
+        return transactions.stream()
+                .filter(t -> t.getTransactionType() == TransactionType.EXPENSE)
+                .map(Transaction::getAmount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 
 
-//    public BigDecimal getTotalIncome(int year, int month) {
-//        List<Transaction> transactions = getTransactionsByMonth(year, month);
-//        return transactions.stream()
-//                .filter(t -> t.getTransactionType() == TransactionType.INCOME)
-//                .map(Transaction::getAmount)
-//                .reduce(BigDecimal.ZERO, BigDecimal::add);
-//    }
+    public BigDecimal getTotalIncome(int year, int month) throws Exception {
+        List<Transaction> transactions = getTransactionsByMonth(year, month);
+        BigDecimal result = BigDecimal.ZERO;
+        try {
+            result = transactions.stream()
+                    .filter(t -> t.getTransactionType() == TransactionType.INCOME)
+                    .map(Transaction::getAmount)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+        } catch (NullPointerException e) {
+            throw new NullPointerException();
+        } catch (Exception e) {
+            throw new Exception("Errore non previsto");
+        }
+
+        return result;
+    }
 
     public Transaction findById(Long id) throws IOException {
         Optional<Transaction> transaction = this.transactionRepository.findById(id);

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -31,14 +32,27 @@ public class TransactionController {
         }
     }
 
-//    @GetMapping("/total-income")
-//    public ResponseEntity<BigDecimal> getTotalIncome(@RequestParam int year, @RequestParam int month) {
-//        return ResponseEntity.ok(transactionService.getTotalIncome(year, month));
-//    }
+    @GetMapping("/total-income")
+    public ResponseEntity<BigDecimal> getTotalIncome(@RequestParam(defaultValue = "2020") int year, @RequestParam(defaultValue = "6") int month) {
+        try {
+            return ResponseEntity.ok(transactionService.getTotalIncome(year, month));
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(BigDecimal.ZERO);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(BigDecimal.ONE);
+        }
+    }
 
-//    @GetMapping("/total-expense")
-//    public ResponseEntity<BigDecimal> getTotalExpense(@RequestParam int year, @RequestParam int month) {
-//        return ResponseEntity.ok(transactionService.getTotalExpense(year, month));
-//    }
+    @GetMapping("/total-expense")
+    public ResponseEntity<BigDecimal> getTotalExpense(@RequestParam int year, @RequestParam int month) {
+        return ResponseEntity.ok(transactionService.getTotalExpense(year, month));
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<String> handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("Invalid parameter: " + ex.getName() + ". Expected type: " + ex.getRequiredType());
+    }
+
 
 }
